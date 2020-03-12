@@ -1,4 +1,9 @@
-/// Scatter plot chart example
+/// Example of a scatter plot chart with a bucketing measure axis and a legend.
+///
+/// A bucketing measure axis positions all values beneath a certain threshold
+/// into a reserved space on the axis range. The label for the bucket line will
+/// be drawn in the middle of the bucket range, rather than aligned with the
+/// gridline for that value's position on the scale.
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -20,50 +25,139 @@ class Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.ScatterPlotChart(seriesList, animate: animate);
+
+    var chart= new charts.ScatterPlotChart(seriesList,
+        // Set up a bucketing axis that will place all values below 0.1 (10%)
+        // into a bucket at the bottom of the chart.
+        //
+        // Configure a tick count of 3 so that we get 100%, 50%, and the
+        // threshold.
+        primaryMeasureAxis: new charts.BucketingAxisSpec(
+            threshold: 0.1,
+            tickProviderSpec: new charts.BucketingNumericTickProviderSpec(
+                desiredTickCount: 3)),
+        // Add a series legend to display the series names.
+        behaviors: [
+          new charts.SeriesLegend(position: charts.BehaviorPosition.end),
+        ],
+        animate: animate);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bubble"),
+        centerTitle: true,
+      ),
+      body:  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text(
+            'You have pushed the button this many times:',
+          ),
+          //new Text(
+          //  '${clicksCount[actualClickData]}',
+          // style: Theme.of(context).textTheme.display1,
+          // ),
+          Padding(
+            padding: new EdgeInsets.all(32.0),
+            child: new SizedBox(
+              height: 200.0,
+              child: chart,
+            ),
+          ),
+          FlatButton(
+            child: Icon(Icons.add),
+            color: Colors.cyan,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+            // onPressed: (){
+            // setState(() {
+            // ++clicksCount[actualClickData];
+            // });
+            // },
+          )
+        ],
+      ),
+    );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 5, 20),
-      new LinearSales(10, 25, 14),
-      new LinearSales(12, 75, 15),
-      new LinearSales(13, 225, 17),
-      new LinearSales(16, 50, 18),
-      new LinearSales(24, 75, 23),
-      new LinearSales(25, 100, 14),
-      new LinearSales(34, 150, 15),
-      new LinearSales(37, 10, 14),
-      new LinearSales(45, 300, 18),
-      new LinearSales(52, 15, 14),
-      new LinearSales(56, 200, 17),
+    final myFakeDesktopData = [
+      new LinearSales(52, 0.75, 14.0),
     ];
 
-    final maxMeasure = 300;
+    final myFakeTabletData = [
+      new LinearSales(45, 0.3, 18.0),
+    ];
+
+    final myFakeMobileData = [
+      new LinearSales(56, 0.8, 17.0),
+    ];
+
+    final myFakeChromebookData = [
+      new LinearSales(25, 0.6, 13.0),
+    ];
+
+    final myFakeHomeData = [
+      new LinearSales(34, 0.5, 15.0),
+    ];
+
+    final myFakeOtherData = [
+      new LinearSales(10, 0.25, 15.0),
+      new LinearSales(12, 0.075, 14.0),
+      new LinearSales(13, 0.225, 15.0),
+      new LinearSales(16, 0.03, 14.0),
+      new LinearSales(24, 0.04, 13.0),
+      new LinearSales(37, 0.1, 14.5),
+    ];
 
     return [
       new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        // Providing a color function is optional.
-        colorFn: (LinearSales sales, _) {
-          // Bucket the measure column value into 3 distinct colors.
-          final bucket = sales.sales / maxMeasure;
-
-          if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
-          } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
-          } else {
-            return charts.MaterialPalette.green.shadeDefault;
-          }
-        },
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        // Providing a radius function is optional.
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
-        data: data,
-      )
+          id: 'Desktop',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeDesktopData),
+      new charts.Series<LinearSales, int>(
+          id: 'Tablet',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.red.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeTabletData),
+      new charts.Series<LinearSales, int>(
+          id: 'Mobile',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.green.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeMobileData),
+      new charts.Series<LinearSales, int>(
+          id: 'Chromebook',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.purple.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeChromebookData),
+      new charts.Series<LinearSales, int>(
+          id: 'Home',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.indigo.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeHomeData),
+      new charts.Series<LinearSales, int>(
+          id: 'Other',
+          colorFn: (LinearSales sales, _) =>
+          charts.MaterialPalette.gray.shadeDefault,
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.revenueShare,
+          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          data: myFakeOtherData),
     ];
   }
 }
@@ -71,8 +165,8 @@ class Bubble extends StatelessWidget {
 /// Sample linear data type.
 class LinearSales {
   final int year;
-  final int sales;
+  final double revenueShare;
   final double radius;
 
-  LinearSales(this.year, this.sales, this.radius);
+  LinearSales(this.year, this.revenueShare, this.radius);
 }
