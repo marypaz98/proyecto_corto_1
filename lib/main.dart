@@ -70,7 +70,7 @@ class Home extends StatelessWidget {
             ["Bars", Bars()],
             ["Pie", Pie()],
             ["Bubble", Bubble.withSampleData()],
-            ["Line-Bart",lineBar.withSampleData()],
+            ["Line-Bar",lineBar.withSampleData()],
             ["Area-line", AreaLine.withSampleData()]
           ])
         ),
