@@ -4,6 +4,7 @@ import 'package:proyecto_corto_1/bars.dart';
 import 'package:proyecto_corto_1/pie.dart';
 import 'package:proyecto_corto_1/bubble.dart';
 import 'package:proyecto_corto_1/lineBar.dart';
+import 'package:proyecto_corto_1/areaLine.dart';
 
 void main() => runApp(MaterialApp(home: Home()));
 
@@ -51,7 +52,14 @@ class Home extends StatelessWidget {
 
               },
             ),
-            Divider(height: 10,)
+            Divider(height: 10,),
+            ListTile(
+              title: Text("Option 5"),
+              onTap: (){
+
+              },
+            ),
+            Divider(height:10,)
           ],
         )
       ),
@@ -62,7 +70,8 @@ class Home extends StatelessWidget {
             ["Bars", Bars()],
             ["Pie", Pie()],
             ["Bubble", Bubble.withSampleData()],
-            ["Line-Bart",lineBar.withSampleData()]
+            ["Line-Bar",lineBar.withSampleData()],
+            ["Area-line", AreaLine.withSampleData()]
           ])
         ),
       ),

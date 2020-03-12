@@ -21,7 +21,7 @@ class lineBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.NumericComboChart(seriesList,
+    var chart= new charts.NumericComboChart(seriesList,
         animate: animate,
         // Configure the default renderer as a line renderer. This will be used
         // for any series that does not define a rendererIdKey.
@@ -32,6 +32,41 @@ class lineBar extends StatelessWidget {
             // ID used to link series to this renderer.
               customRendererId: 'customBar')
         ]);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Line bar"),
+        centerTitle: true,
+      ),
+      body:  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text(
+            'You have pushed the button this many times:',
+          ),
+          //new Text(
+          //  '${clicksCount[actualClickData]}',
+          // style: Theme.of(context).textTheme.display1,
+          // ),
+          Padding(
+            padding: new EdgeInsets.all(32.0),
+            child: new SizedBox(
+              height: 200.0,
+              child: chart,
+            ),
+          ),
+          FlatButton(
+            child: Icon(Icons.add),
+            color: Colors.cyan,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+            // onPressed: (){
+            // setState(() {
+            // ++clicksCount[actualClickData];
+            // });
+            // },
+          )
+        ],
+      ),
+    );
   }
 
   /// Create one series with sample hard coded data.
