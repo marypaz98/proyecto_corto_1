@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_corto_1/bars.dart';
 import 'package:proyecto_corto_1/pie.dart';
 import 'package:proyecto_corto_1/bubble.dart';
+import 'package:proyecto_corto_1/lineBar.dart';
 
 void main() => runApp(MaterialApp(home: Home()));
 
@@ -43,6 +44,13 @@ class Home extends StatelessWidget {
 
               },
             ),
+            Divider(height: 10,),
+            ListTile(
+              title: Text("Option 4"),
+              onTap:(){
+
+              },
+            ),
             Divider(height: 10,)
           ],
         )
@@ -53,7 +61,8 @@ class Home extends StatelessWidget {
           children: createButtons(context, Colors.cyan, [
             ["Bars", Bars()],
             ["Pie", Pie()],
-            ["Bubble", Bubble.withSampleData()]
+            ["Bubble", Bubble.withSampleData()],
+            ["Line-Bart",lineBar.withSampleData()]
           ])
         ),
       ),
