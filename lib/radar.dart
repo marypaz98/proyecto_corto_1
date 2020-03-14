@@ -24,6 +24,16 @@ class RadarChart extends StatefulWidget {
   final Color axisColor;
   final List<Color> graphColors;
 
+  factory RadarChart.withSampleData() {
+    const ticks = [7, 14, 21, 28, 35];
+    var features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
+    var data = [
+      [10, 20, 28, 5, 16, 15, 17, 6],
+      [15, 1, 4, 14, 23, 10, 6, 19]
+    ];
+    return new RadarChart.light(ticks: ticks, features: features, data: data);
+  }
+
   const RadarChart({
     Key key,
     @required this.ticks,
@@ -31,8 +41,8 @@ class RadarChart extends StatefulWidget {
     @required this.data,
     this.reverseAxis = false,
     this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
-    this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
-    this.outlineColor = Colors.black,
+    this.featuresTextStyle = const TextStyle(color: Colors.white, fontSize: 16),
+    this.outlineColor = Colors.white,
     this.axisColor = Colors.grey,
     this.graphColors = defaultGraphColors,
   }) : super(key: key);
