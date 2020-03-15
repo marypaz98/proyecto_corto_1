@@ -25,11 +25,11 @@ class RadarChart extends StatefulWidget {
   final List<Color> graphColors;
 
   factory RadarChart.withSampleData() {
-    const ticks = [7, 14, 21, 28, 35];
-    var features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
+    const ticks = [100, 1000, 10000, 100000, 100000,150000];
+    var features = ["Para ver", "Para oír", "Para caminar", "Para utilizar brazos o manos", "Del tipo intelectual", "Del tipo mental", "Sin discapacidad"];
     var data = [
-      [10, 20, 28, 5, 16, 15, 17, 6],
-      [15, 1, 4, 14, 23, 10, 6, 19]
+      [112613, 37420,16595 , 64271, 23001, 19968, 14126,1887668],//hombres
+      [128851, 33469, 12818, 76109, 25858, 15448, 12845,1961195]//mujeres
     ];
     return new RadarChart.light(ticks: ticks, features: features, data: data);
   }
@@ -115,10 +115,9 @@ class _RadarChartState extends State<RadarChart>
     animationController.forward();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget getForm(double pWidth, double pHeight){
     return CustomPaint(
-      size: Size(double.infinity, double.infinity),
+      size: Size(pWidth, pHeight),
       painter: RadarChartPainter(
           widget.ticks,
           widget.features,
@@ -132,7 +131,24 @@ class _RadarChartState extends State<RadarChart>
           this.fraction),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Radar"),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[getForm()],
+      ),
+    );
+
+  }
 }
+
+
 
 class RadarChartPainter extends CustomPainter {
   final List<int> ticks;
