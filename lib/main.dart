@@ -5,6 +5,7 @@ import 'package:proyecto_corto_1/pie.dart';
 import 'package:proyecto_corto_1/bubble.dart';
 import 'package:proyecto_corto_1/lineBar.dart';
 import 'package:proyecto_corto_1/areaLine.dart';
+import 'package:proyecto_corto_1/radar.dart';
 
 void main() => runApp(MaterialApp(home: Home()));
 
@@ -71,7 +72,8 @@ class Home extends StatelessWidget {
             ["Pie", Pie()],
             ["Bubble", Bubble.withSampleData()],
             ["Line-Bar",lineBar.withSampleData()],
-            ["Area-line", AreaLine.withSampleData()]
+            ["Area-line", AreaLine.withSampleData()],
+            ["Radar View", RadarChart.withSampleData()]
           ])
         ),
       ),
