@@ -1,1 +1,5 @@
 Java.gitignore
+/build
+.dart_tool/
+
+.idea/
