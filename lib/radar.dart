@@ -3,6 +3,7 @@ library flutter_radar_chart;
 import 'dart:ui';
 import 'dart:math' as math;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
 
@@ -13,10 +14,28 @@ const defaultGraphColors = [
   Colors.orange,
 ];
 
+const defaultTicks = [1000, 10000, 100000,140000,180000];
+const defaultFeatures = ["Intelectual", "Audición", "Mental", "Motora Superior",
+  "Visión", "Movilidad"];
+//var features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
+const totalData = [
+  [23001, 37420,14126  , 64271, 112613, 19968, 16595],//hombres
+  [25858 , 33469, 12845, 76109, 128851, 15448, 12818]//mujeres
+];
+
+const menData = [
+  [23001, 37420,14126  , 64271, 112613, 19968, 16595]
+];
+
+const womenData = [
+  [25858 , 33469, 12845, 76109, 128851, 15448, 12818]//mujeres
+];
+
+// ignore: must_be_immutable
 class RadarChart extends StatefulWidget {
   final List<int> ticks;
   final List<String> features;
-  final List<List<int>> data;
+  List<List<int>> data;
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
@@ -25,24 +44,19 @@ class RadarChart extends StatefulWidget {
   final List<Color> graphColors;
 
   factory RadarChart.withSampleData() {
-    const ticks = [100, 1000, 10000, 100000, 100000,150000];
-    var features = ["Para ver", "Para oír", "Para caminar", "Para utilizar brazos o manos", "Del tipo intelectual", "Del tipo mental", "Sin discapacidad"];
-    var data = [
-      [112613, 37420,16595 , 64271, 23001, 19968, 14126,1887668],//hombres
-      [128851, 33469, 12818, 76109, 25858, 15448, 12845,1961195]//mujeres
-    ];
-    return new RadarChart.light(ticks: ticks, features: features, data: data);
+
+    return new RadarChart.light(ticks: defaultTicks,features: defaultFeatures, data: totalData);
   }
 
-  const RadarChart({
+  RadarChart({
     Key key,
-    @required this.ticks,
-    @required this.features,
-    @required this.data,
+     this.ticks = defaultTicks,
+     this.features = defaultFeatures,
+     this.data = totalData,
     this.reverseAxis = false,
-    this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
-    this.featuresTextStyle = const TextStyle(color: Colors.white, fontSize: 16),
-    this.outlineColor = Colors.white,
+    this.ticksTextStyle = const TextStyle(color: Colors.black, fontSize: 12),
+    this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
+    this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
     this.graphColors = defaultGraphColors,
   }) : super(key: key);
@@ -61,32 +75,16 @@ class RadarChart extends StatefulWidget {
     );
   }
 
-  factory RadarChart.dark({
-    @required List<int> ticks,
-    @required List<String> features,
-    @required List<List<int>> data,
-    bool reverseAxis = false,
-  }) {
-    return RadarChart(
-      ticks: ticks,
-      features: features,
-      data: data,
-      featuresTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
-      outlineColor: Colors.white,
-      axisColor: Colors.grey,
-      reverseAxis: reverseAxis,
-    );
-  }
-
   @override
   _RadarChartState createState() => _RadarChartState();
 }
 
-class _RadarChartState extends State<RadarChart>
-    with SingleTickerProviderStateMixin {
+class _RadarChartState extends State<RadarChart> with SingleTickerProviderStateMixin {
   double fraction;
   Animation<double> animation;
   AnimationController animationController;
+  String defaultValueForMenu = "Todos";
+  List<List<int>> actualList = totalData;
 
   @override
   void initState() {
@@ -115,13 +113,13 @@ class _RadarChartState extends State<RadarChart>
     animationController.forward();
   }
 
-  Widget getForm(double pWidth, double pHeight){
+  Widget getForm(List<List<int>> dataList){
     return CustomPaint(
-      size: Size(pWidth, pHeight),
+      size: Size(double.infinity,double.infinity),
       painter: RadarChartPainter(
           widget.ticks,
           widget.features,
-          widget.data,
+          widget.data = dataList,
           widget.reverseAxis,
           widget.ticksTextStyle,
           widget.featuresTextStyle,
@@ -134,14 +132,53 @@ class _RadarChartState extends State<RadarChart>
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Radar"),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[getForm()],
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0,),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  DropdownButton<String>(
+                    value:this.defaultValueForMenu ,
+                    icon: Icon(Icons.arrow_drop_down),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        defaultValueForMenu = newValue;
+                        if (defaultValueForMenu == "Hombres"){
+                          actualList = menData;
+                        }else if(defaultValueForMenu == "Mujeres"){
+                          actualList = womenData;
+                        }else{
+                          actualList = totalData;
+                        }
+                      });
+                    },
+                    items: <String>["Todos", "Hombres", "Mujeres"].map((String value){
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList()
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: getForm(actualList)
+            ),
+          ],
+        ),
       ),
     );
 
@@ -228,15 +265,15 @@ class RadarChartPainter extends CustomPainter {
 
       canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
-      var featureLabelFontHeight = (featuresTextStyle as TextStyle).fontSize;
-      var featureLabelFontWidth = (featuresTextStyle as TextStyle).fontSize - 4;
+      var featureLabelFontHeight = featuresTextStyle.fontSize;
+      var featureLabelFontWidth = featuresTextStyle.fontSize-8;
       var labelYOffset = yAngle < 0 ? -featureLabelFontHeight : 0;
       var labelXOffset =
       xAngle < 0 ? -featureLabelFontWidth * feature.length : 0;
 
       TextPainter(
         text: TextSpan(text: feature, style: featuresTextStyle),
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
