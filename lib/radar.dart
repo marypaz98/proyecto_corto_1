@@ -136,7 +136,7 @@ class _RadarChartState extends State<RadarChart> with SingleTickerProviderStateM
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Radar"),
+        title: Text("Discapacidad por género y tipo"),
         centerTitle: true,
       ),
       body: Container(
@@ -145,10 +145,18 @@ class _RadarChartState extends State<RadarChart> with SingleTickerProviderStateM
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 4.0),
+              child: Text(
+                "Este grafico presenta la cantidad de personas con un determinado tipo de discapacidad por género, además de la comparación de las mismas entre ambos géneros.",
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  Text("Mostrando a:      ",style: TextStyle(fontSize: 15,),),
                   DropdownButton<String>(
                     value:this.defaultValueForMenu ,
                     icon: Icon(Icons.arrow_drop_down),
