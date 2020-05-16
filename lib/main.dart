@@ -32,35 +32,7 @@ class Home extends StatelessWidget {
 
               },
             ),
-            Divider(height: 10,),
-            ListTile(
-              title: Text("Option 2"),
-              onTap: (){
-
-              },
-            ),
-            Divider(height: 10,),
-            ListTile(
-              title: Text("Option 3"),
-              onTap: (){
-
-              },
-            ),
-            Divider(height: 10,),
-            ListTile(
-              title: Text("Option 4"),
-              onTap:(){
-
-              },
-            ),
-            Divider(height: 10,),
-            ListTile(
-              title: Text("Option 5"),
-              onTap: (){
-
-              },
-            ),
-            Divider(height:10,)
+            Divider(height:5,)
           ],
         )
       ),
@@ -69,7 +41,6 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: createButtons(context, Colors.cyan, [
             ["Bars", Bars()],
-            ["Pie", Pie()],
             ["Bubble", Bubble.withSampleData()],
             ["Line-Bar",lineBar.withSampleData()],
             ["Area-line", AreaLine.withSampleData()],
