@@ -14,23 +14,19 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Data viualization"),
+        title: Text("Data viualization Project 1"),
         centerTitle: true,
       ),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Text("Drawer header"),
+              child: Text("Hecho Por: "
+                  "Mary Paz Aguilar y Juan José Solano",
+                textAlign: TextAlign.justify,),
               decoration: BoxDecoration(
                 color: Colors.lightBlue
               ),
-            ),
-            ListTile(
-              title: Text("Option 1"),
-              onTap: (){
-
-              },
             ),
             Divider(height:5,)
           ],
@@ -40,10 +36,8 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: createButtons(context, Colors.cyan, [
-            ["Bars", Bars()],
-            ["Bubble", Bubble.withSampleData()],
-            ["Line-Bar",lineBar.withSampleData()],
-            ["Area-line", AreaLine.withSampleData()],
+            ["Bubble View", Bubble.withSampleData()],
+            ["Line-Bar View",lineBar.withSampleData()],
             ["Radar View", RadarChart.withSampleData()]
           ])
         ),
