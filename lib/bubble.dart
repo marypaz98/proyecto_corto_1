@@ -64,84 +64,56 @@ class Bubble extends StatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final myFakeDesktopData = [
-      new LinearSales(52, 0.75, 14.0),
+    final adolescentes = [
+      new LinearSales(14, 0.07, 15.0),
     ];
 
-    final myFakeTabletData = [
-      new LinearSales(45, 0.3, 18.0),
+    final jovenes = [
+      new LinearSales(29, 0.22, 20.0),
     ];
 
-    final myFakeMobileData = [
-      new LinearSales(56, 0.8, 17.0),
+    final adultos = [
+      new LinearSales(64, 0.52, 30.0),
     ];
 
-    final myFakeChromebookData = [
-      new LinearSales(25, 0.6, 13.0),
+    final adultosMayores = [
+      new LinearSales(95, 0.33, 25.0),
     ];
 
-    final myFakeHomeData = [
-      new LinearSales(34, 0.5, 15.0),
-    ];
-
-    final myFakeOtherData = [
-      new LinearSales(10, 0.25, 15.0),
-      new LinearSales(12, 0.075, 14.0),
-      new LinearSales(13, 0.225, 15.0),
-      new LinearSales(16, 0.03, 14.0),
-      new LinearSales(24, 0.04, 13.0),
-      new LinearSales(37, 0.1, 14.5),
-    ];
 
     return [
       new charts.Series<LinearSales, int>(
-          id: 'Desktop',
+          id: 'Adolescentes',
           colorFn: (LinearSales sales, _) =>
           charts.MaterialPalette.blue.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeDesktopData),
+          data: adolescentes),
       new charts.Series<LinearSales, int>(
-          id: 'Tablet',
+          id: 'Jovenes',
           colorFn: (LinearSales sales, _) =>
           charts.MaterialPalette.red.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeTabletData),
+          data: jovenes),
       new charts.Series<LinearSales, int>(
-          id: 'Mobile',
+          id: 'Adultos',
           colorFn: (LinearSales sales, _) =>
           charts.MaterialPalette.green.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeMobileData),
+          data: adultos),
       new charts.Series<LinearSales, int>(
-          id: 'Chromebook',
+          id: 'Adultos Mayores',
           colorFn: (LinearSales sales, _) =>
           charts.MaterialPalette.purple.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeChromebookData),
-      new charts.Series<LinearSales, int>(
-          id: 'Home',
-          colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.indigo.shadeDefault,
-          domainFn: (LinearSales sales, _) => sales.year,
-          measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeHomeData),
-      new charts.Series<LinearSales, int>(
-          id: 'Other',
-          colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.gray.shadeDefault,
-          domainFn: (LinearSales sales, _) => sales.year,
-          measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
-          data: myFakeOtherData),
+          data: adultosMayores),
     ];
   }
 }

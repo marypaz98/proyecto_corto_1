@@ -38,6 +38,7 @@ class Home extends StatelessWidget {
           children: createButtons(context, Colors.cyan, [
             ["Bubble View", Bubble.withSampleData()],
             ["Line-Bar View",lineBar.withSampleData()],
+
             ["Radar View", RadarChart.withSampleData()]
           ])
         ),
