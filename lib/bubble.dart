@@ -41,6 +41,7 @@ class Bubble extends StatelessWidget {
           new charts.SeriesLegend(position: charts.BehaviorPosition.end),
         ],
         animate: animate);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Bubble"),
@@ -49,13 +50,6 @@ class Bubble extends StatelessWidget {
       body:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Text(
-            'Porcentaje de personas con discapacidad según la etapa de desarrollo:',
-          ),
-          //new Text(
-          //  '${clicksCount[actualClickData]}',
-          // style: Theme.of(context).textTheme.display1,
-          // ),
           Padding(
             padding: new EdgeInsets.all(32.0),
             child: new SizedBox(
